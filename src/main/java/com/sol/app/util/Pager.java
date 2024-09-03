@@ -1,0 +1,32 @@
+package com.sol.app.util;
+
+import lombok.Data;
+
+@Data
+public class Pager {
+	
+	private Long perPage = 10L;
+	private Long startRow;
+	private Long page;
+	
+	private String kind;
+	private String search;
+	
+	public void makeRow() {
+		this.startRow = (page-1L) * perPage;
+	}
+	
+	public String getKind() {
+		if(this.kind == null || this.kind.equals("")) {
+			this.kind = "k1";
+		}
+		return this.kind;
+	}
+	
+	public String getSearch() {
+		if(this.search == null) {
+			this.search = "";
+		}
+		return this.search;
+	}
+}
