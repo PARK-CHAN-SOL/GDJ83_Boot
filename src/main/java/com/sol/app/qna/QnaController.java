@@ -27,7 +27,7 @@ public class QnaController {
 		model.addAttribute("list", list);
 		model.addAttribute("pager", pager);
 		log.info("Pager: {} : {}", pager, pager.getKind());
-		return "/qna/list";
+		return "qna/list";
 	}
 	
 	@GetMapping("add")
