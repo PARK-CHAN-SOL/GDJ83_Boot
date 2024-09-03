@@ -4,10 +4,11 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sol.app.notice.NoticeMapper">
-	<select id="getList" resultType="NoticeVO">
+	<select id="getList" parameterType="java.lang.Long" resultType="NoticeVO">
 		SELECT		*
 		FROM		NOTICE
-		ORDER BY	BOARD_NUM DESC 
+		WHERE		BOARD_NUM > #{num}
+		ORDER BY	BOARD_NUM DESC
 	</select>
 	<insert id="add" parameterType="NoticeVO">
 		INSERT INTO NOTICE

@@ -16,11 +16,8 @@ class NoticeMapperTest {
 	
 	@Test
 	void getListTest() throws Exception {
-		List<NoticeVO> list = noticeMapper.getList();
-		for(NoticeVO noticeVO : list) {
-			System.out.println(noticeVO);
-		}
-		assertEquals(list.size(), 100);
+		List<NoticeVO> list = noticeMapper.getList(1L);
+		assertEquals(list.size(), 99);
 	}
 	
 	/*
