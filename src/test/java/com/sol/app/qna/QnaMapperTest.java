@@ -2,6 +2,7 @@ package com.sol.app.qna;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -25,6 +26,14 @@ class QnaMapperTest {
 	 * qnaVO.setRef((long)i); qnaVO.setStep(0L); qnaVO.setDepth(0L); Integer result
 	 * = qnaMapper.add(qnaVO); if(i%10==0) { Thread.sleep(100); } } }
 	 */
+	
+	@Test
+	void getDetailTest() throws Exception {
+		QnaVO qnaVO = new QnaVO();
+		qnaVO.setBoardNum(110L);
+		qnaVO = qnaMapper.getDetail(qnaVO);
+		assertNotNull(qnaVO);
+	}
 	
 	@Test
 	void getListTest() throws Exception {

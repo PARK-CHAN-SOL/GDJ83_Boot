@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.sol.app.qna.QnaMapper">
+  
   	<select id="getList" resultType="QnaVO" parameterType="Pager">
   		SELECT		*
   		FROM		QNA
@@ -21,8 +22,22 @@
   		ORDER BY	BOARD_NUM DESC
   		LIMIT		#{startRow}, #{perPage}
   	</select>
-  	<insert id="add" parameterType="QnaVO">
+  	
+  	<insert id="add" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="ref">
   		INSERT INTO QNA
   		VALUES (#{boardNum}, #{boardWriter}, #{boardTitle}, #{boardContents}, now(), #{ref}, #{step}, #{depth})
   	</insert>
+  	
+  	<update id="refUpdate" parameterType="QnaVO">
+  		UPDATE QNA
+  		SET REF = #{ref}
+  		WHERE BOARD_NUM = #{ref}
+  	</update>
+  	
+  	<select id="getDetail" parameterType="QnaVO" resultType="QnaVO">
+  		SELECT	*
+  		FROM	QNA
+  		WHERE	BOARD_NUM = #{boardNum}
+  	</select>
+  	
   </mapper>
