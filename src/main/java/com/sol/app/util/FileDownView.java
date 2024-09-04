@@ -26,10 +26,9 @@ public class FileDownView extends AbstractView{
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-				System.out.println("FileDownView");
 				QnaFileVO qnaFileVO = (QnaFileVO)model.get("qnaFileVO");
 												
-				File file = new File(path, qnaFileVO.getFileName());
+				File file = new File(path+qnaFileVO.getFileName());
 				
 				//응답시 한글 Encoding 처리
 				response.setCharacterEncoding("UTF-8");
