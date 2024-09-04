@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,11 @@
 				<td>${qnaVO.boardContents}</td>
 				<td>${qnaVO.createDate}</td>
 			</tr>
+			<c:forEach items="${qnaVO.ar}" var="qnaFileVO">
+				<tr>
+					<img src="/files/${board += '/' += qnaFileVO.fileName}">
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </body>

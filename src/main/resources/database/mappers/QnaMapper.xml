@@ -23,21 +23,45 @@
   		LIMIT		#{startRow}, #{perPage}
   	</select>
   	
-  	<insert id="add" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="ref">
+  	<insert id="add" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="boardNum">
   		INSERT INTO QNA
   		VALUES (#{boardNum}, #{boardWriter}, #{boardTitle}, #{boardContents}, now(), #{ref}, #{step}, #{depth})
   	</insert>
   	
   	<update id="refUpdate" parameterType="QnaVO">
   		UPDATE QNA
-  		SET REF = #{ref}
-  		WHERE BOARD_NUM = #{ref}
+  		SET REF = #{boardNum}
+  		WHERE BOARD_NUM = #{boardNum}
   	</update>
   	
-  	<select id="getDetail" parameterType="QnaVO" resultType="QnaVO">
+  	<select id="getDetail" parameterType="QnaVO" resultMap="detailMap">
   		SELECT	*
-  		FROM	QNA
-  		WHERE	BOARD_NUM = #{boardNum}
+  		FROM	QNA q LEFT JOIN QNAFILES qf
+  				ON q.BOARD_NUM = qf.BOARD_NUM
+  		WHERE	q.BOARD_NUM = #{boardNum}
   	</select>
+  	
+  	<resultMap type="QnaVO" id="detailMap">
+  		<id property="boardNum" column="BOARD_NUM"/>
+  		<result property="boardWriter" column="BOARD_WRITER"/>
+  		<result property="boardTitle" column="BOARD_TITLE"/>
+  		<result property="boardContents" column="BOARD_Contents"/>
+  		<result property="createDate" column="CREATE_DATE"/>
+  		<result property="ref" column="REF"/>
+  		<result property="step" column="STEP"/>
+  		<result property="depth" column="DEPTH"/>
+  		
+  		<collection property="ar" javaType="list" ofType="QnaFileVO">
+  			<id property="fileNum" column="FILE_NUM"/>
+  			<result property="fileName" column="FILE_NAME"/>
+  			<result property="oriName" column="ORI_NAME"/>
+  		</collection>
+  	</resultMap>
+  	
+  	<insert id="addFile" parameterType="QnaFileVO">
+  		INSERT INTO QNAFILES (FILE_NAME, ORI_NAME, BOARD_NUM)
+  		VALUES (#{fileName}, #{oriName}, #{boardNum})
+  	</insert>
+
   	
   </mapper>

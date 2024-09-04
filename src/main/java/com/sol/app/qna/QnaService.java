@@ -30,14 +30,11 @@ public class QnaService {
 	
 	public List<QnaVO> getList(Pager pager) throws Exception {
 		pager.makeRow();
-		log.info("Upload Path: {}",upload);
 		return qnaMapper.getList(pager);
 	}
 	
 	public Integer add(QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
-		log.info("===========Insert Before BoardNum: {}", qnaVO.getBoardNum());
 		Integer result = qnaMapper.add(qnaVO);
-		log.info("===========Insert After BoardNum: {}", qnaVO.getBoardNum());
 		result = qnaMapper.refUpdate(qnaVO);
 		
 		//파일을 HDD에 저장 후 DB에 정보 추가
@@ -48,15 +45,21 @@ public class QnaService {
 			}
 			
 			String fileName = fileManager.fileSave(upload+name, file);
-			log.info("저장된 파일명: {}", fileName);
 			
+			QnaFileVO qnaFileVO = new QnaFileVO();
+			qnaFileVO.setFileName(fileName);
+			qnaFileVO.setOriName(file.getOriginalFilename());
+			qnaFileVO.setBoardNum(qnaVO.getBoardNum());
+			
+			result = qnaMapper.addFile(qnaFileVO);
 		}
 		
 		
-		return 0;
+		return result;
 	}
 	
 	public QnaVO getDetail(QnaVO qnaVO) throws Exception {
 		return qnaMapper.getDetail(qnaVO);
 	}
+
 }
