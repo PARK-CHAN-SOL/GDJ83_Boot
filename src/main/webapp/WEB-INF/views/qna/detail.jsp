@@ -30,8 +30,7 @@
 	</table>
 	
 	<c:forEach items="${qnaVO.ar}" var="qnaFileVO">
-		<img src="/files/${qnaFileVO.fileName}">
-		<a href="./fileDown?fileNum=${qnaFileVO.fileNum}">${qnaFileVO.oriName}</a>
+		<a href="/files/${qnaFileVO.fileName}" download="${qnaFileVO.oriName}"><img src="/files/${qnaFileVO.fileName}"></a>
 	</c:forEach>
 </body>
 </html>
