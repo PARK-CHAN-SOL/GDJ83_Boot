@@ -1,12 +1,14 @@
 package com.sol.app.qna;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sol.app.aws.S3Service;
 import com.sol.app.util.FileManager;
 import com.sol.app.util.Pager;
 
@@ -18,6 +20,9 @@ public class QnaService {
 	
 	@Autowired
 	private QnaMapper qnaMapper;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	@Value("${app.upload}")
 	private String upload;
@@ -44,7 +49,9 @@ public class QnaService {
 				continue;
 			}
 			
-			String fileName = fileManager.fileSave(upload+name, file);
+			String fileName = UUID.randomUUID().toString()+"_"+file.getOriginalFilename();
+			
+			log.info(s3Service.upload(file, fileName));
 			
 			QnaFileVO qnaFileVO = new QnaFileVO();
 			qnaFileVO.setFileName(fileName);
@@ -61,5 +68,9 @@ public class QnaService {
 	public QnaVO getDetail(QnaVO qnaVO) throws Exception {
 		return qnaMapper.getDetail(qnaVO);
 	}
+	
+	public QnaFileVO getFileDetail(QnaFileVO qnaFileVO) throws Exception{
+		return qnaMapper.getFileDetail(qnaFileVO);
+	};
 
 }

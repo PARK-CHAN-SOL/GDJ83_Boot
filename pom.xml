@@ -118,6 +118,29 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
+		<!--
+		https://mvnrepository.com/artifact/io.awspring.cloud/spring-cloud-starter-aws -->
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-starter-aws</artifactId>
+			<version>2.4.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.16.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -134,7 +157,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			
+
 			<!-- maven 빌드시 테스트 무시 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
