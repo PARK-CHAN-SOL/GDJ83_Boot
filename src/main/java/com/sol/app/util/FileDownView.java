@@ -28,11 +28,8 @@ public class FileDownView extends AbstractView{
 		// TODO Auto-generated method stub
 				System.out.println("FileDownView");
 				QnaFileVO qnaFileVO = (QnaFileVO)model.get("qnaFileVO");
-				
-				//경로 준비
-				String directory = (String)model.get("board");
-								
-				File file = new File(path + directory, qnaFileVO.getFileName());
+												
+				File file = new File(path, qnaFileVO.getFileName());
 				
 				//응답시 한글 Encoding 처리
 				response.setCharacterEncoding("UTF-8");
