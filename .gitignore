@@ -34,3 +34,5 @@ build/
 
 ### Custom ###
 application-db.properties
+application-dev.properties
+application-prod.properties
