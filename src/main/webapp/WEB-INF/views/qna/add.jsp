@@ -8,10 +8,13 @@
 </head>
 <body>
 	<h1>Qna Add</h1>
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data">
 		<input type="text" name="boardTitle" placeholder="Title">
 		<input type="text" name="boardWriter" placeholder="Writer">
 		<textarea rows="" cols="" name="boardContents" placeholder="Contents"></textarea>
+		<input type="file" name="attaches">
+		<input type="file" name="attaches">
+		<input type="file" name="attaches">
 		<button>Add</button>
 	</form>
 </body>
