@@ -10,14 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 	
 	@GetMapping("/")
-	public String home() throws Exception {
-		
-		log.trace("trace");
-		log.debug("debug");
-		log.info("info");
-		log.warn("warn");
-		log.error("error");
-		
+	public String home() throws Exception {		
 		return "index";
 	}
 }
