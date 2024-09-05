@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sol.app.aws.S3Service;
@@ -38,11 +39,12 @@ public class QnaService {
 		return qnaMapper.getList(pager);
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
 	public Integer add(QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
 		Integer result = qnaMapper.add(qnaVO);
 		result = qnaMapper.refUpdate(qnaVO);
 		
-		if(result == 1) {
+		if(result == 0) {
 			throw new Exception();
 		}
 		

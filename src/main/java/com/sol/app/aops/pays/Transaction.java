@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 public class Transaction {
 	
 	@AfterThrowing("execution(* com.sol.app.*.*.set*(..))")
-	public void rollBack() {}
+	public void rollback() {}
 	
 }
