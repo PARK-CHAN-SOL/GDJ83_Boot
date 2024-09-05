@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>Index Page</h1>
-	<img alt="메롱" src="/images/내루미_진화_(1).gif">
+	<img alt="메롱" src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1617087525/noticon/uedixpon6rcvcqbtuf0c.gif">
 
 	<c:if test="${empty member}">
 		<h1>로그인 안해써여</h1>
