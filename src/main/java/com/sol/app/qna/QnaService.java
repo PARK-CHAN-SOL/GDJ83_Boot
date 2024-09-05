@@ -42,6 +42,10 @@ public class QnaService {
 		Integer result = qnaMapper.add(qnaVO);
 		result = qnaMapper.refUpdate(qnaVO);
 		
+		if(result == 1) {
+			throw new Exception();
+		}
+		
 		//파일을 HDD에 저장 후 DB에 정보 추가
 		for(MultipartFile file : attaches) {
 			
