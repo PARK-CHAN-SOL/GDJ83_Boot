@@ -23,12 +23,15 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor)
-		.addPathPatterns("/qna/**")
-		.excludePathPatterns("/qna/list");
+		/*
+		 * registry.addInterceptor(loginInterceptor) .addPathPatterns("/qna/**")
+		 * .excludePathPatterns("/qna/list");
+		 */
 		
-		registry.addInterceptor(adminCheckInterceptor)
-		.addPathPatterns("/qna/add", "/admin/**");
+		/*
+		 * registry.addInterceptor(adminCheckInterceptor) .addPathPatterns("/qna/add",
+		 * "/admin/**");
+		 */
 		
 		registry.addInterceptor(localeChangeInterceptor)
 		.addPathPatterns("/**");

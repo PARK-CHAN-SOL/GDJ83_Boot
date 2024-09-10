@@ -27,6 +27,9 @@
 		<a href="/member/logout">
 			<button>logout</button>
 		</a>
+		<a href="/member/mypage">
+			<button>mypage</button>
+		</a>
 		<c:forEach items="${member.roles}" var="roleVO">
 			<h3>당신 ${roleVO.roleName}</h3>
 		</c:forEach>
