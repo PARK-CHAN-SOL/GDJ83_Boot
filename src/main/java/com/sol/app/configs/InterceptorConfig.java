@@ -9,7 +9,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import com.sol.app.home.interceptors.AdminCheckInterceptor;
 import com.sol.app.home.interceptors.LoginInterceptor;
 
-@Configuration
+//@Configuration
 public class InterceptorConfig implements WebMvcConfigurer{
 	
 	@Autowired
@@ -28,10 +28,12 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		 * .excludePathPatterns("/qna/list");
 		 */
 		
+		
 		/*
 		 * registry.addInterceptor(adminCheckInterceptor) .addPathPatterns("/qna/add",
 		 * "/admin/**");
 		 */
+		 
 		
 		registry.addInterceptor(localeChangeInterceptor)
 		.addPathPatterns("/**");

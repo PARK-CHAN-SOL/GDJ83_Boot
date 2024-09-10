@@ -1,7 +1,13 @@
 package com.sol.app.members;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.sol.app.validate.MemberAddGroup;
 import com.sol.app.validate.MemberUpdateGroup;
@@ -14,7 +20,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class MemberVO {
+public class MemberVO implements UserDetails{
 	@NotBlank(groups = {MemberAddGroup.class, MemberUpdateGroup.class})
 	private String username;
 	
@@ -34,7 +40,44 @@ public class MemberVO {
 	@Past(groups = {MemberAddGroup.class, MemberUpdateGroup.class})
 	private Date birth;
 	
-	private Boolean enabled;
+	private boolean enabled;
 	
 	private List<RoleVO> roles;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		
+		for(RoleVO roleVO : roles) {
+			GrantedAuthority authority = new SimpleGrantedAuthority(roleVO.getRoleName());
+			authorities.add(authority);
+		}
+		
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		//return UserDetails.super.isAccountNonExpired();
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		//return UserDetails.super.isAccountNonLocked();
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		//return UserDetails.super.isCredentialsNonExpired();
+		return true;
+	}
+	
+	public boolean isEnabled() {
+		return true;
+	}
 }

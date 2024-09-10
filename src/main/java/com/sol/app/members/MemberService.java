@@ -4,14 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 @Service
-public class MemberService {
+public class MemberService implements UserDetailsService{
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public boolean memberValidate(MemberVO memberVO, BindingResult bindingResult) throws Exception {
 		boolean check = false;
@@ -38,6 +45,7 @@ public class MemberService {
 	
 	@Transactional(rollbackFor = Exception.class)
 	public Integer add(MemberVO memberVO) throws Exception {
+		memberVO.setPassword(passwordEncoder.encode(memberVO.getPassword()));
 		Integer result = memberMapper.add(memberVO);
 		Map<String, Object> map = new HashMap<>();
 		map.put("username", memberVO.getUsername());
@@ -61,4 +69,19 @@ public class MemberService {
 		}
 		return null;
 	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setUsername(username);
+		try {
+			memberVO = memberMapper.detail(memberVO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return memberVO;
+	}
+	
+	
 }

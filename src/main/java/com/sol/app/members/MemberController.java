@@ -68,16 +68,15 @@ public class MemberController {
 		
 	}
 	
-	@PostMapping("login")
-	public String login(MemberVO memberVO, HttpSession session) throws Exception {
-		memberVO = memberService.detail(memberVO);
-		
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-		}
-		
-		return "redirect:../";
-	}
+	//Security 기능 사용시 아래 메서드는 더이상 사요하지 않음 (스프링이 가로챔)
+	/*
+	 * @PostMapping("login") public String login(MemberVO memberVO, HttpSession
+	 * session) throws Exception { memberVO = memberService.detail(memberVO);
+	 * 
+	 * if(memberVO != null) { session.setAttribute("member", memberVO); }
+	 * 
+	 * return "redirect:../"; }
+	 */
 	
 	@GetMapping("logout")
 	public String logout(HttpSession session) throws Exception {

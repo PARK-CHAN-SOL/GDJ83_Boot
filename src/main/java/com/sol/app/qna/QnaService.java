@@ -18,64 +18,65 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class QnaService {
-	
+
 	@Autowired
 	private QnaMapper qnaMapper;
-	
+
 	@Autowired
 	private S3Service s3Service;
-	
+
 	@Value("${app.upload}")
 	private String upload;
-	
+
 	@Value("${board.qna}")
 	private String name;
-	
+
 	@Autowired
 	private FileManager fileManager;
-	
+
 	public List<QnaVO> getList(Pager pager) throws Exception {
 		pager.makeRow();
 		return qnaMapper.getList(pager);
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	public Integer add(QnaVO qnaVO, MultipartFile[] attaches) throws Exception {
 		Integer result = qnaMapper.add(qnaVO);
 		result = qnaMapper.refUpdate(qnaVO);
-		
-		if(result == 0) {
+
+		if (result == 0) {
 			throw new Exception();
 		}
-		
-		//파일을 HDD에 저장 후 DB에 정보 추가
-		for(MultipartFile file : attaches) {
-			
-			if(file == null || file.isEmpty()) {
-				continue;
+
+		// 파일을 HDD에 저장 후 DB에 정보 추가
+		if (attaches != null) {
+			for (MultipartFile file : attaches) {
+
+				if (file == null || file.isEmpty()) {
+					continue;
+				}
+
+				String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+				log.info(s3Service.upload(file, fileName));
+
+				QnaFileVO qnaFileVO = new QnaFileVO();
+				qnaFileVO.setFileName(fileName);
+				qnaFileVO.setOriName(file.getOriginalFilename());
+				qnaFileVO.setBoardNum(qnaVO.getBoardNum());
+
+				result = qnaMapper.addFile(qnaFileVO);
 			}
-			
-			String fileName = UUID.randomUUID().toString()+"_"+file.getOriginalFilename();
-			
-			log.info(s3Service.upload(file, fileName));
-			
-			QnaFileVO qnaFileVO = new QnaFileVO();
-			qnaFileVO.setFileName(fileName);
-			qnaFileVO.setOriName(file.getOriginalFilename());
-			qnaFileVO.setBoardNum(qnaVO.getBoardNum());
-			
-			result = qnaMapper.addFile(qnaFileVO);
 		}
-		
-		
+
 		return result;
 	}
-	
+
 	public QnaVO getDetail(QnaVO qnaVO) throws Exception {
 		return qnaMapper.getDetail(qnaVO);
 	}
-	
-	public QnaFileVO getFileDetail(QnaFileVO qnaFileVO) throws Exception{
+
+	public QnaFileVO getFileDetail(QnaFileVO qnaFileVO) throws Exception {
 		return qnaMapper.getFileDetail(qnaFileVO);
 	};
 

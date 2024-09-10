@@ -9,4 +9,5 @@ public interface MemberMapper {
 	public Integer add(MemberVO memberVO) throws Exception;
 	public MemberVO detail(MemberVO memberVO) throws Exception;
 	public Integer addRole(Map<String, Object> map) throws Exception;
+	public Integer pwUpdate(MemberVO memberVO) throws Exception;
 }

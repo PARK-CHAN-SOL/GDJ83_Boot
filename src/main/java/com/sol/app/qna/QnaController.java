@@ -45,7 +45,7 @@ public class QnaController {
 	
 	@GetMapping("add")
 	public void add(QnaVO qnaVO) throws Exception {
-		
+		log.info("=========================Get, /qna/add=========================");
 	}
 	
 	@PostMapping("add")
