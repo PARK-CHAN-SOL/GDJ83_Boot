@@ -49,6 +49,10 @@ public class MemberVO implements UserDetails, OAuth2User{
 	//OauthUser
 	//token 정보 저장
 	private Map<String, Object> attributes;
+	
+	private String accessToken;
+	
+	private String sns;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

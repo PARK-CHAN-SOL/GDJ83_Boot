@@ -54,7 +54,7 @@ public class MemberUserService extends DefaultOAuth2UserService implements UserD
 		String sns = reg.getRegistrationId();
 		OAuth2User auth2User = super.loadUser(userRequest);
 		if (sns.equals("kakao")) {
-			auth2User = this.useKakao(auth2User);
+			auth2User = this.useKakao(userRequest);
 		} else if (sns.equals("naver")) {
 
 		}
@@ -62,7 +62,9 @@ public class MemberUserService extends DefaultOAuth2UserService implements UserD
 		return auth2User;
 	}
 
-	private OAuth2User useKakao(OAuth2User auth2User) throws OAuth2AuthenticationException {
+	private OAuth2User useKakao(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+		OAuth2User auth2User = super.loadUser(userRequest);
+		
 		log.error("==============================================");
 		log.error("ID: {}", auth2User.getName());
 		log.error("Attributes: {}", auth2User.getAttributes());
@@ -83,6 +85,12 @@ public class MemberUserService extends DefaultOAuth2UserService implements UserD
 		roles.add(role);
 		
 		memberVO.setRoles(roles);
+		
+		memberVO.setSns(userRequest.getClientRegistration().getRegistrationId());
+		
+		memberVO.setAccessToken(userRequest.getAccessToken().getTokenValue());
+		
+		memberVO.setAttributes(attributes);
 		
 		return memberVO;
 	}

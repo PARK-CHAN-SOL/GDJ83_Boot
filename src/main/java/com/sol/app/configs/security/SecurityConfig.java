@@ -25,6 +25,9 @@ public class SecurityConfig {
 	private SecurityLoginFailureHandler securityLoginFailureHandler;
 	
 	@Autowired
+	private SecurityLogoutSucessHandler securityLogoutSucessHandler;
+	
+	@Autowired
 	private MemberUserService memberUserService;
 	
 	@Bean
@@ -88,7 +91,7 @@ public class SecurityConfig {
 				(logout)->{
 					logout.logoutUrl("/member/logout") // 로그아웃 URL 지정 방법 1
 					.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))// 로그아웃 URL 지정 방법 2
-					.logoutSuccessUrl("/")
+					.logoutSuccessHandler(securityLogoutSucessHandler)
 					.invalidateHttpSession(true)//true: session 만료, false: session 만료 X
 					//.deleteCookies(null)
 					;
