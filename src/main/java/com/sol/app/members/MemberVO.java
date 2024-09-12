@@ -3,24 +3,26 @@ package com.sol.app.members;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.sol.app.validate.MemberAddGroup;
 import com.sol.app.validate.MemberUpdateGroup;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class MemberVO implements UserDetails{
+public class MemberVO implements UserDetails, OAuth2User{
 	@NotBlank(groups = {MemberAddGroup.class, MemberUpdateGroup.class})
 	private String username;
 	
@@ -43,6 +45,10 @@ public class MemberVO implements UserDetails{
 	private boolean enabled;
 	
 	private List<RoleVO> roles;
+	
+	//OauthUser
+	//token 정보 저장
+	private Map<String, Object> attributes;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -76,8 +82,13 @@ public class MemberVO implements UserDetails{
 		//return UserDetails.super.isCredentialsNonExpired();
 		return true;
 	}
-	
-	public boolean isEnabled() {
-		return true;
+
+	@Override
+	public Map<String, Object> getAttributes() {
+
+		return this.attributes;
 	}
+	
+	
 }
+

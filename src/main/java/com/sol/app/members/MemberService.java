@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 @Service
-public class MemberService implements UserDetailsService{
+public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
 	
@@ -69,19 +69,5 @@ public class MemberService implements UserDetailsService{
 		}
 		return null;
 	}
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		MemberVO memberVO = new MemberVO();
-		memberVO.setUsername(username);
-		try {
-			memberVO = memberMapper.detail(memberVO);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return memberVO;
-	}
-	
 	
 }
